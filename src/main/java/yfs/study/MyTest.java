@@ -14,8 +14,21 @@ public class MyTest {
         //构建sqlSession的工厂
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(is);
         SqlSession session = sessionFactory.openSession();
-        String statement = "yfs.study.mapper.GrazeUserMapper.get";//映射sql的标识字符串
-        GrazeUser grazeUser = session.selectOne(statement, 1);
+        //查数据
+        GrazeUser grazeUser = getById(sessionFactory);
+//        grazeUser.setName("yangfengshuai");
+        //查数据
+        GrazeUser grazeUser1 = getById(sessionFactory);
+//        session.commit();
         System.out.println(grazeUser);
     }
+
+    public static GrazeUser getById(SqlSessionFactory sessionFactory) {
+        SqlSession session = sessionFactory.openSession();
+        String statement = "yfs.study.mapper.GrazeUserMapper.get";//映射sql的标识字符串
+        //查数据
+        GrazeUser grazeUser = session.selectOne(statement, 1);
+        return grazeUser;
+    }
+
 }

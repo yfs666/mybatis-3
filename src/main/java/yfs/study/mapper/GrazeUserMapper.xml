@@ -4,7 +4,7 @@
 例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
  -->
 <mapper namespace="yfs.study.mapper.GrazeUserMapper">
-
+    <cache eviction="LRU" flushInterval="100000" readOnly="true" size="1024"/>
     <resultMap id="BaseResultMap" type="yfs.study.entity.GrazeUser">
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="name" property="name" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
         id, name, age, birth_day,gmt_create
     </sql>
 
-    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer" useCache="true">
         select
         <include refid="Base_Column_List" />
         from graze_user
