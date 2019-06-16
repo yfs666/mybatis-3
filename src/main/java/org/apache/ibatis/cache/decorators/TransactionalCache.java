@@ -39,9 +39,14 @@ import org.apache.ibatis.logging.LogFactory;
 public class TransactionalCache implements Cache {
 
   private static final Log log = LogFactory.getLog(TransactionalCache.class);
-
+  /**
+   * 提交的缓存，二级缓存是把entriesToAddOnCommit中的k-v循环遍历放入到delegate中
+   */
   private final Cache delegate;
   private boolean clearOnCommit;
+  /**
+   * 将要提交的缓存，放入到此map中，二级缓存的时候，是把查出来的数据，第一时间放入此map，在sqlSession执行commit的时候，把数据从此对象转存到(Cache) delegate中
+   */
   private final Map<Object, Object> entriesToAddOnCommit;
   private final Set<Object> entriesMissedInCache;
 

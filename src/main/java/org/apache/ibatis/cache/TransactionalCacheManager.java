@@ -36,6 +36,7 @@ public class TransactionalCacheManager {
   }
 
   public void putObject(Cache cache, CacheKey key, Object value) {
+    //执行完是把k-v存入到TransactionalCache的变量entriesToAddOnCommit中
     getTransactionalCache(cache).putObject(key, value);
   }
 

@@ -6,7 +6,7 @@
         <!-- 打印查询语句 -->
         <setting name="logImpl" value="STDOUT_LOGGING" />
         <setting name="cacheEnabled" value="true"/>
-        <!--<setting name="localCacheScope" value="SESSION"/>-->
+        <setting name="localCacheScope" value="SESSION"/>
     </settings>
 
     <environments default="development">

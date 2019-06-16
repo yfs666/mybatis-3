@@ -39,6 +39,9 @@ import org.apache.ibatis.transaction.Transaction;
 public class CachingExecutor implements Executor {
 
   private final Executor delegate;
+  /**
+   * 事务缓存管理器，二级缓存的数据暂时存在这里
+   */
   private final TransactionalCacheManager tcm = new TransactionalCacheManager();
 
   public CachingExecutor(Executor delegate) {
@@ -101,6 +104,7 @@ public class CachingExecutor implements Executor {
         List<E> list = (List<E>) tcm.getObject(cache, key);
         if (list == null) {
           list = delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+          //把查出来的数据暂时放到tcm中
           tcm.putObject(cache, key, list); // issue #578 and #116
         }
         return list;
@@ -116,6 +120,7 @@ public class CachingExecutor implements Executor {
 
   @Override
   public void commit(boolean required) throws SQLException {
+    //CachingExecutor不过也是使用的SimpleExecutor的执行操作，执行完执行自己的缓存操作delegate就是SimpleExecutor
     delegate.commit(required);
     tcm.commit();
   }

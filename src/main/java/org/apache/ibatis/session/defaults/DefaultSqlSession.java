@@ -220,6 +220,7 @@ public class DefaultSqlSession implements SqlSession {
   @Override
   public void commit(boolean force) {
     try {
+      //如果不开启二级缓存，直接使用SimpleExecutor,开启二级缓存的话，执行的是CachingExecutor,CachingExecutor不过也是使用的SimpleExecutor的执行操作，执行完执行自己的缓存操作
       executor.commit(isCommitOrRollbackRequired(force));
       dirty = false;
     } catch (Exception e) {

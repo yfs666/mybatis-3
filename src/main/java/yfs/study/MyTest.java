@@ -13,13 +13,11 @@ public class MyTest {
         InputStream is = MyTest.class.getClassLoader().getResourceAsStream(resource);
         //构建sqlSession的工厂
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(is);
-        SqlSession session = sessionFactory.openSession();
         //查数据
         GrazeUser grazeUser = getById(sessionFactory);
-//        grazeUser.setName("yangfengshuai");
+        grazeUser.setName("yangfengshuai");
         //查数据
         GrazeUser grazeUser1 = getById(sessionFactory);
-//        session.commit();
         System.out.println(grazeUser);
     }
 
@@ -28,7 +26,9 @@ public class MyTest {
         String statement = "yfs.study.mapper.GrazeUserMapper.get";//映射sql的标识字符串
         //查数据
         GrazeUser grazeUser = session.selectOne(statement, 1);
+        session.commit();
         return grazeUser;
     }
 
 }
+
